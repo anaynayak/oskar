@@ -25,6 +25,10 @@ nav.top-nav.mini {
   padding-bottom: 0.56666rem;
 }
 
+.post-listing__listing-title {
+  font-size: 2.2em;
+}
+
 .status-1 {
   color: #e23d28;
 }

@@ -31,13 +31,14 @@ routes = (app, mongo, slack) ->
 
       # set to false if at least one user doesn't have a status
       isSortingPossible = true
-
+      teamStatus = 0
       if statuses.length
         statuses.forEach (status) ->
           if status.feedback isnt null
             filteredStatuses[status.id]              = status.feedback
             filteredStatuses[status.id].date         = new Date status.feedback.timestamp
             filteredStatuses[status.id].statusString = OskarTexts.statusText[status.feedback.status]
+            teamStatus += parseInt(status.feedback.status)
           else
             isSortingPossible = false
 
@@ -47,7 +48,15 @@ routes = (app, mongo, slack) ->
             users.sort (a, b) ->
               return filteredStatuses[a.id].status > filteredStatuses[b.id].status
 
-      res.render('pages/index', { users: users, statuses: filteredStatuses })
+      teamStatus = Math.round(teamStatus / statuses.length)
+      res.render('pages/index', {
+        users: users,
+        statuses: filteredStatuses,
+        team: {
+          status: teamStatus
+          statusString: OskarTexts.statusText[teamStatus]
+        }
+      })
 
   # user status
   app.get '/status/:userId', (req, res) =>

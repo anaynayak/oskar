@@ -19,7 +19,13 @@
               <% if( typeof users === 'undefined' ) { %>
               <h2>Sorry, no users have reported their status yet</h2>
               <% } else { %>
-
+              <article class="post-listing__listing-title post-listing__listing-item">
+                  <div class="row">
+                      <div class="medium-12 columns text-center">
+                          The team is feeling <span class="status-<%= team.status %>"><%= team.statusString %></span>
+                      </div>
+                  </div>
+              </article>
               <!-- User list -->
               <% users.forEach(function(user) { %>
                 <article class="post-listing__listing-item">
