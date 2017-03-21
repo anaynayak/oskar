@@ -82,11 +82,40 @@
             <% } %>
 
           </div>
+          <div id="container" style="margin-top:0"></div>
+
         </section>
       </div>
 
       <footer>
           <% include ../partials/internal-footer %>
+          <script>
+              <% if( typeof team !== 'undefined' ) { %>
+                  $('#container').highcharts({
+                      chart: {
+                          backgroundColor: '#f5f7f8'
+                      },
+                      legend: {
+                          enabled: false
+                      },
+                      title: {
+                          text: 'Trend',
+                          margin: 50
+                      },
+                      xAxis: {
+                          type: 'datetime'
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Status'
+                          },
+                          min: 1,
+                          max: 5
+                      },
+                      series: <%- team.teamMemberStatus %>
+                  });
+              <% } %>
+          </script>
       </footer>
 
     </div>

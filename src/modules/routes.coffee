@@ -1,4 +1,5 @@
 OskarTexts   = require '../content/oskarTexts'
+Team         = require './team'
 basicAuth    = require 'basic-auth-connect'
 bodyParser   = require 'body-parser'
 config       = require 'config'
@@ -31,14 +32,12 @@ routes = (app, mongo, slack) ->
 
       # set to false if at least one user doesn't have a status
       isSortingPossible = true
-      teamStatus = 0
       if statuses.length
         statuses.forEach (status) ->
           if status.feedback isnt null
             filteredStatuses[status.id]              = status.feedback
             filteredStatuses[status.id].date         = new Date status.feedback.timestamp
             filteredStatuses[status.id].statusString = OskarTexts.statusText[status.feedback.status]
-            teamStatus += parseInt(status.feedback.status)
           else
             isSortingPossible = false
 
@@ -47,15 +46,11 @@ routes = (app, mongo, slack) ->
           if users[0].status
             users.sort (a, b) ->
               return filteredStatuses[a.id].status > filteredStatuses[b.id].status
-
-      teamStatus = Math.round(teamStatus / statuses.length)
+        team = new Team(statuses).status()
       res.render('pages/index', {
         users: users,
         statuses: filteredStatuses,
-        team: {
-          status: teamStatus
-          statusString: OskarTexts.statusText[teamStatus]
-        }
+        team: team
       })
 
   # user status

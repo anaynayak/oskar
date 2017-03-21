@@ -159,7 +159,9 @@ class MongoClient
 
           res =
             id: elem.id
+            name: elem.name
             feedback: feedback
+            all_feedback: elem.feedback || []
 
         resolve users
 
