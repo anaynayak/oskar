@@ -154,7 +154,7 @@ class MongoClient
           feedback = null
           if elem.feedback
             elem.feedback.sort (a, b) ->
-              a.timestamp > b.timestamp
+              a.timestamp - b.timestamp
             feedback = elem.feedback.pop()
 
           res =

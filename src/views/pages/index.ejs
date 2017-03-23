@@ -94,10 +94,6 @@
                   $('#container').highcharts({
                       chart: {
                           backgroundColor: '#f5f7f8',
-                          type: 'spline'
-                      },
-                      legend: {
-                          enabled: false
                       },
                       title: {
                           text: 'Trend',
@@ -110,7 +106,7 @@
                           title: {
                               text: 'Status'
                           },
-                          min: 1,
+                          min: 0,
                           max: 5
                       },
                       series: <%- team.teamMemberStatus %>
